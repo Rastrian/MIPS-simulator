@@ -3,10 +3,16 @@ package dev.rastrian;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Locale;
 
 public class Main {
 
 	public static void main(String[] args) {
+		System.setProperty("file.encoding", "UTF-8");
+		Locale.setDefault(new Locale("pt", "BR"));
+
+		System.out.println("\nUse o comando sair para sair do terminal.\n");
+
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		String input = "";
 		Boolean errorMsg = true;
@@ -20,7 +26,7 @@ public class Main {
 
 				}
 				if (errorMsg) {
-					System.out.println("Erro, utilize a seguinte syntax de execução:\nmips32-decode [input path] [output path]");
+					System.out.println("Error: mips32-decode [input path] [output path]");
 				}
 			}
 		} catch (IOException e) {

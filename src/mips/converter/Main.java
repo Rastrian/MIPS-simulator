@@ -1,9 +1,12 @@
-package dev.rastrian;
+package mips.converter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Locale;
+
+import mips.converter.io.ReadFile;
 
 public class Main {
 
@@ -23,11 +26,16 @@ public class Main {
 				terminalArgs = input.split(" ");
 				if (input.length() > 0 && terminalArgs[0].equals("mips32-decode") &&
 					(!terminalArgs[1].isEmpty()) && (!terminalArgs[2].isEmpty()))	{
-
+						List<String> MIPScommands = ReadFile.getCommands(terminalArgs[1]);
+						if (!MIPScommands.isEmpty()){
+							errorMsg = false;
+							MIPScommands.forEach(c -> System.out.println(c));
+						}
 				}
 				if (errorMsg) {
 					System.out.println("Error: mips32-decode [input path] [output path]");
 				}
+				errorMsg = true;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

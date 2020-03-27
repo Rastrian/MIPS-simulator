@@ -1,4 +1,4 @@
-package dev.rastrian.io;
+package mips.converter.io;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

@@ -21,7 +21,7 @@
         <configuration>
           <archive>
             <manifest>
-                <mainClass>dev.rastrian.Main</mainClass>
+                <mainClass>mips.converter.Main</mainClass>
             </manifest>
           </archive>
         </configuration>

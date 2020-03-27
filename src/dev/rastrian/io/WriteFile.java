@@ -1,4 +1,4 @@
-package io;
+package dev.rastrian.io;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

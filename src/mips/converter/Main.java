@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Locale;
 
-import mips.converter.invoke.MIPSDecoder;
+import mips.converter.invoke.MIPSConverter;
 
 public class Main {
 
@@ -25,7 +25,7 @@ public class Main {
 				terminalArgs = input.split(" ");
 				if (input.length() > 0 && terminalArgs[0].equals("mips32-decode") &&
 					(!terminalArgs[1].isEmpty()) && (!terminalArgs[2].isEmpty()))	{
-						MIPSDecoder.run(terminalArgs[1], terminalArgs[2]);
+						MIPSConverter.run(terminalArgs[1], terminalArgs[2]);
 						errorMsg = false;
 				}
 				if (errorMsg) {

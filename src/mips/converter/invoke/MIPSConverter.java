@@ -7,9 +7,9 @@ import mips.converter.io.ReadFile;
 import mips.converter.io.WriteFile;
 
 /**
- * MIPSDecoder
+ * MIPSConverter
  */
-public class MIPSDecoder {
+public class MIPSConverter {
     public static void run(String inputPath, String outputPath) throws Exception {
         ReadFile readFile = new ReadFile();
         WriteFile writeFile = new WriteFile();

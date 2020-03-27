@@ -28,9 +28,10 @@ public class MIPSDecoder {
 
     public static String processInstruction(String instruction) throws Exception {
         try {
-            String instructionType = InstructionHelpers.getRegisterType(instruction);
             String opcode = InstructionHelpers.getOpcode(instruction);
 
+            String instructionType = InstructionHelpers.getRegisterType(opcode.replace(" ", ""));
+            
             String instructionDecoded = getBinary(instructionType, instruction, opcode);
 
             return instructionDecoded;
@@ -41,7 +42,7 @@ public class MIPSDecoder {
 
     public static String getBinary(String instructionType, String intruction, String opCode) {
         // TODO: Decoders
-        String binary = "";
+        String binary = intruction;
 
         // * Example:
         // switch (instructionType) {

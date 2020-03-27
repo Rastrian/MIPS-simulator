@@ -3,14 +3,13 @@ package mips.converter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.List;
 import java.util.Locale;
 
-import mips.converter.io.ReadFile;
+import mips.converter.invoke.MIPSDecoder;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		System.setProperty("file.encoding", "UTF-8");
 		Locale.setDefault(new Locale("pt", "BR"));
 
@@ -26,11 +25,8 @@ public class Main {
 				terminalArgs = input.split(" ");
 				if (input.length() > 0 && terminalArgs[0].equals("mips32-decode") &&
 					(!terminalArgs[1].isEmpty()) && (!terminalArgs[2].isEmpty()))	{
-						List<String> MIPScommands = ReadFile.getCommands(terminalArgs[1]);
-						if (!MIPScommands.isEmpty()){
-							errorMsg = false;
-							MIPScommands.forEach(c -> System.out.println(c));
-						}
+						MIPSDecoder.run(terminalArgs[1], terminalArgs[2]);
+						errorMsg = false;
 				}
 				if (errorMsg) {
 					System.out.println("Error: mips32-decode [input path] [output path]");

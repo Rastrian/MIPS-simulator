@@ -9,7 +9,7 @@ import java.io.IOException;
  */
 public class WriteFile {
 
-    public static void writeBinary(String path, String line) throws IOException {
+    public void writeBinary(String path, String line) throws IOException {
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path));
 
         bufferedWriter.append(line + "\n");

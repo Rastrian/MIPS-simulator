@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class ReadFile {
 
-    public static List<String> getCommands(String path) throws IOException {
+    public List<String> getCommands(String path) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
 
         List<String> commandsList = new ArrayList<String>();

@@ -9,7 +9,7 @@ import java.util.List;
 public class InstructionHelpers {
 
     public static String getRegisterType(String instruction) throws Exception {
-        
+
         String[] typeRList = { "add", "sub", "mul", "div", "xor", "nor", "slt", "sll", "and", "srl", "jr", "or",
                 "neg" };
 
@@ -18,13 +18,10 @@ public class InstructionHelpers {
         String[] typeIList = { "addi", "lw", "sw", "beq", "bne", "slti", "and", "ori" };
 
         if (Arrays.asList(typeRList).contains(instruction)) {
-            System.out.println("Entrou R");
             return "r";
         } else if (Arrays.asList(typeJList).contains(instruction)) {
-            System.out.println("Entrou J");
             return "j";
         } else if (Arrays.asList(typeIList).contains(instruction)) {
-            System.out.println("Entrou I");
             return "i";
         } else {
             throw new Exception("Instruction does not match any type");
@@ -39,7 +36,22 @@ public class InstructionHelpers {
         return instruction.substring(0, instruction.indexOf("$"));
     }
 
-    public String binaryListDecoding(List<String> regValueFinal, int get, int quant) {
-		return "";
-	}
+    public String binaryListDecoding(List<String> valuesList, int index, int amount) {
+        int value = Integer.parseInt(valuesList.get(index));
+
+        int[] binaryList = new int[amount];
+
+        for (int i = 0; i <= (amount - 1); i++) {
+            binaryList[i] = value % 2;
+            value = value / 2;
+        }
+
+        String bynaryLine = "";
+
+        for (int i = (amount - 1); i >= 0; i--) {
+            bynaryLine += ((Integer.toString(binaryList[i])));
+        }
+
+        return bynaryLine;
+    }
 }

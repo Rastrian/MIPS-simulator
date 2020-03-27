@@ -18,8 +18,14 @@ public class MIPSDecoder {
             List<String> commands = readFile.getCommands(inputPath);
 
             for (int i = 0; i < commands.size(); i++) {
-                String decoded = processInstruction(commands.get(i));
-                writeFile.writeBinary(outputPath, decoded);
+                String decoded = " ";
+
+                if (commands.get(i).equals("nop")) {
+                    writeFile.writeBinary(outputPath, decoded);
+                } else {
+                    decoded = processInstruction(commands.get(i));
+                    writeFile.writeBinary(outputPath, decoded);
+                }
             }
         } catch (Exception e) {
             throw e;

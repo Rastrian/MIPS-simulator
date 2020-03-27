@@ -1,6 +1,7 @@
 package mips.converter.helpers;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * InstructionHelpers
@@ -9,7 +10,7 @@ public class InstructionHelpers {
 
     public static String getRegisterType(String instruction) throws Exception {
         
-        String[] typeRList = { "add", "sub", "mult", "div", "xor", "nor", "slt", "sll", "and", "srl", "jr", "or",
+        String[] typeRList = { "add", "sub", "mul", "div", "xor", "nor", "slt", "sll", "and", "srl", "jr", "or",
                 "neg" };
 
         String[] typeJList = { "j", "jal" };
@@ -37,4 +38,8 @@ public class InstructionHelpers {
     public static String getOpcode(String instruction) {
         return instruction.substring(0, instruction.indexOf("$"));
     }
+
+    public String binaryListDecoding(List<String> regValueFinal, int get, int quant) {
+		return "";
+	}
 }

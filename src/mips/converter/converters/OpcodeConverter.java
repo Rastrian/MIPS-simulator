@@ -10,7 +10,7 @@ public class OpcodeConverter {
                 return "001000";
             case "sub":
                 return "100010";
-            case "mult":
+            case "mul":
                 return "011000";
             case "div":
                 return "011010";

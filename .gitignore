@@ -3,4 +3,14 @@ MIPS-converter.iml
 
 *.jar
 
-target/maven-status/
+target/*
+
+.idea/*
+
+.settings/*
+
+.vscode/*
+
+pom.xml
+
+bin/*

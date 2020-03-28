@@ -7,9 +7,9 @@ import mips.converter.io.ReadFile;
 import mips.converter.io.WriteFile;
 
 /**
- * MIPSDecoder
+ * MIPSConverter
  */
-public class MIPSDecoder {
+public class MIPSConverter {
     public static void run(String inputPath, String outputPath) throws Exception {
         ReadFile readFile = new ReadFile();
         WriteFile writeFile = new WriteFile();
@@ -18,8 +18,14 @@ public class MIPSDecoder {
             List<String> commands = readFile.getCommands(inputPath);
 
             for (int i = 0; i < commands.size(); i++) {
-                String decoded = processInstruction(commands.get(i));
-                writeFile.writeBinary(outputPath, decoded);
+                String decoded = " ";
+
+                if (commands.get(i).equals("nop")) {
+                    writeFile.writeBinary(outputPath, decoded);
+                } else {
+                    decoded = processInstruction(commands.get(i));
+                    writeFile.writeBinary(outputPath, decoded);
+                }
             }
         } catch (Exception e) {
             throw e;

@@ -37,6 +37,30 @@ public class DecodeOperands {
     return "";
   }
 
+  private static String getDecodedRegister(String operationType, String register) {
+    if (operationType.equals("i")) {
+      Integer registerInt = getRegisterInt(register);
+      String unpaddedRegister = Integer.toBinaryString(registerInt);
+
+      return "00000".substring(unpaddedRegister.length()) + unpaddedRegister;
+    }
+
+    return "";
+  }
+
+  private static String getDecodedImmediate(String operationType, String immediate) {
+    String unpaddedImmediate = Integer.toBinaryString(Integer.parseInt(immediate));
+    String gap = "";
+
+    if (operationType.equals("i")) {
+      gap = "0000000000000000";
+    } else if (operationType.equals("j")) {
+      gap = "0000000000000000000000000";
+    }
+
+    return gap.substring(unpaddedImmediate.length()) + unpaddedImmediate;
+  }
+
   private static String decodeTypeR(String[] operandsBits) {
     String result = "";
 
@@ -49,11 +73,9 @@ public class DecodeOperands {
 
   private static String decodeTypeJ(String[] operandsBits) {
     String result = "";
-    System.out.println(operandsBits.toString());
 
     for (String operand : operandsBits) {
-      String unpaddedImmediate = Integer.toBinaryString(Integer.parseInt(operand));
-      result += "0000000000000000000000000".substring(unpaddedImmediate.length()) + unpaddedImmediate;
+      result += getDecodedImmediate("j", operand);
     }
 
     return result;
@@ -69,31 +91,21 @@ public class DecodeOperands {
       if (!isAbsolute) {
         if (operand.contains("(")) {
           String[] splittedOperand = operand.split("[\\(\\)]");
-          String register = splittedOperand[1];
-          String immediate = splittedOperand[0];
+          String register = getDecodedRegister("i", splittedOperand[1]);
+          String immediate = getDecodedImmediate("i", splittedOperand[0]);
 
-          Integer registerInt = getRegisterInt(register);
-          String unpaddedRegister = Integer.toBinaryString(registerInt);
-          register = "00000".substring(unpaddedRegister.length()) + unpaddedRegister;
-
-          String unpaddedImmediate = Integer.toBinaryString(Integer.parseInt(immediate));
-          result = register + result + "0000000000000000".substring(unpaddedImmediate.length()) + unpaddedImmediate;
+          result = register + result + immediate;
           continue;
         } else if (i == 1) {
-          Integer registerInt = getRegisterInt(operand);
-          String unpaddedRegister = Integer.toBinaryString(registerInt);
-          result = ("00000".substring(unpaddedRegister.length()) + unpaddedRegister) + result;
+          result = getDecodedRegister("i", operand) + result;
           continue;
         }
 
-        Integer registerInt = getRegisterInt(operand);
-        String unpaddedRegister = Integer.toBinaryString(registerInt);
-        result += "00000".substring(unpaddedRegister.length()) + unpaddedRegister;
+        result += getDecodedRegister("i", operand);
         continue;
       }
 
-      String unpaddedImmediate = Integer.toBinaryString(Integer.parseInt(operand));
-      result += "0000000000000000".substring(unpaddedImmediate.length()) + unpaddedImmediate;
+      result += getDecodedImmediate("i", operand);
     }
 
     return result;

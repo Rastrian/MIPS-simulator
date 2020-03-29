@@ -1,10 +1,13 @@
 package mips.converter.invoke;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.List;
 
+import mips.converter.decode.DecodeOperands;
+import mips.converter.decode.Opcode;
 import mips.converter.helpers.InstructionHelpers;
 import mips.converter.io.ReadFile;
-import mips.converter.io.WriteFile;
 
 /**
  * MIPSDecoder
@@ -12,15 +15,26 @@ import mips.converter.io.WriteFile;
 public class MIPSDecoder {
     public static void run(String inputPath, String outputPath) throws Exception {
         ReadFile readFile = new ReadFile();
-        WriteFile writeFile = new WriteFile();
+        File file = new File(outputPath);
+
+        if (!file.createNewFile()) {
+            FileWriter tempFileWriter = new FileWriter(file);
+            tempFileWriter.write("");
+            tempFileWriter.close();
+        }
+
+        FileWriter writeFile = new FileWriter(file, true);
 
         try {
             List<String> commands = readFile.getCommands(inputPath);
 
             for (int i = 0; i < commands.size(); i++) {
                 String decoded = processInstruction(commands.get(i));
-                writeFile.writeBinary(outputPath, decoded);
+                writeFile.append(decoded + "\n");
+                writeFile.flush();
             }
+
+            writeFile.close();
         } catch (Exception e) {
             throw e;
         }
@@ -28,35 +42,18 @@ public class MIPSDecoder {
 
     public static String processInstruction(String instruction) throws Exception {
         try {
-            String opcode = InstructionHelpers.getOpcode(instruction);
+            String[] bits = instruction.replace("$", "").split(" ");
+            String opcode = bits[0];
+            String instructionType = InstructionHelpers.getRegisterType(opcode);
+            String[] operands = instruction.replace(opcode, "").replace(" ", "").split(",");
 
-            String instructionType = InstructionHelpers.getRegisterType(opcode.replace(" ", ""));
-            
-            String instructionDecoded = getBinary(instructionType, instruction, opcode);
-
-            return instructionDecoded;
+            return getBinary(instructionType, opcode, operands);
         } catch (Exception e) {
             throw e;
         }
     }
 
-    public static String getBinary(String instructionType, String intruction, String opCode) {
-        // TODO: Decoders
-        String binary = intruction;
-
-        // * Example:
-        // switch (instructionType) {
-        //     case "r":
-        //         binary = decode.decodeRegistersTypeR(instruction) + decodeOP.decodeOpcode(opcode);
-        //         break;
-        //     case "j":
-        //         binary = decode.decodeRegistersTypeJ(instruction) + decodeOP.decodeOpcode(opcode);
-        //         break;
-        //     case "i":
-        //         binary = decode.decodeRegistersTypeI(instruction) + decodeOP.decodeOpcode(opcode);
-        //         break;
-        // }
-
-        return binary;
+    public static String getBinary(String instructionType, String opCode, String[] operands) {
+        return Opcode.MAP.get(opCode) + DecodeOperands.decode(instructionType, opCode, operands);
     }
 }

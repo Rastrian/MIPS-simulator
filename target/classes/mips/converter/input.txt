@@ -1,8 +1,12 @@
-addi s0, s1, 1
-andi s0, s1, 1
-ori s0, s1, 1
-slti s0, s1, 1
-beq s0, s1, 4
-bne s0, s1, 4
-lw s0, 4(s1)
-sw s0, 4(s1)
+add s0, s1, s2
+sub s0, s1, s2
+mult s0, s1
+div s0, s1
+and s0, s1, s2
+or s0, s1,s2
+xor s0, s1, s2
+nor s0, s1, s2
+slt s0, s1, s2
+sll s0, s1, 1
+sll s0, s1, 1
+jr s0

@@ -54,22 +54,13 @@ public class MIPSDecoder {
             String instructionType = InstructionHelpers.getRegisterType(opcode);
             String[] operands = instruction.replace(opcode, "").replace(" ", "").split(",");
 
-            System.out.println(instruction);
-            String instructionDecoded = getBinary(instructionType, opcode, operands);
-            System.out.println(instructionDecoded);
-
-            return instructionDecoded;
+            return getBinary(instructionType, opcode, operands);
         } catch (Exception e) {
             throw e;
         }
     }
 
     public static String getBinary(String instructionType, String opCode, String[] operands) {
-        return Opcode.MAP.get(opCode) + DecodeOperands.decode(instructionType, operands);
-        // * Example:
-        // switch (instructionType) {
-        // case "r":
-        // binary = decode.decodeRegistersTypeR(instruction) +
-        // decodeOP.decodeOpcode(opcode);
+        return Opcode.MAP.get(opCode) + DecodeOperands.decode(instructionType, opCode, operands);
     }
 }

@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class InstructionHelpers {
 
     public static String getRegisterType(String instruction) throws Exception {
-        String[] typeRList = { "add", "sub", "mul", "div", "xor", "nor", "slt", "sll", "and", "srl", "jr", "or",
+        String[] typeRList = { "add", "sub", "mult", "div", "xor", "nor", "slt", "sll", "and", "srl", "jr", "or",
                 "neg" };
 
         String[] typeJList = { "j", "jal" };
@@ -22,7 +22,6 @@ public class InstructionHelpers {
         } else if (Arrays.asList(typeIList).contains(instruction)) {
             return "i";
         } else {
-            System.out.println(instruction);
             throw new Exception("Instruction does not match any type");
         }
     }

@@ -23,11 +23,31 @@ public class DecodeOperands {
     }
   };
 
-  public static String decode(String operationType, String[] operands) {
+  public static final Map<String, String> FUNCT_MAP = new HashMap<String, String>() {
+    {
+      put("mult", "24");
+      put("div", "26");
+      put("add", "32");
+      put("addu", "33");
+      put("sub", "34");
+      put("subu", "35");
+      put("and", "36");
+      put("or", "37");
+      put("xor", "38");
+      put("nor", "39");
+      put("slt", "42");
+      put("sltu", "43");
+      put("sll", "0");
+      put("srl", "2");
+      put("jr", "8");
+    }
+  };
+
+  public static String decode(String operationType, String opCode, String[] operands) {
     String lcOperationType = operationType.toLowerCase();
 
     if (lcOperationType.equals("r")) {
-      return decodeTypeR(operands);
+      return decodeTypeR(opCode, operands);
     } else if (lcOperationType.equals("j")) {
       return decodeTypeJ(operands);
     } else if (lcOperationType.equals("i")) {
@@ -38,7 +58,7 @@ public class DecodeOperands {
   }
 
   private static String getDecodedRegister(String operationType, String register) {
-    if (operationType.equals("i")) {
+    if (operationType.equals("i") || operationType.equals("r")) {
       Integer registerInt = getRegisterInt(register);
       String unpaddedRegister = Integer.toBinaryString(registerInt);
 
@@ -56,19 +76,56 @@ public class DecodeOperands {
       gap = "0000000000000000";
     } else if (operationType.equals("j")) {
       gap = "0000000000000000000000000";
+    } else if (operationType.equals("r-1")) {
+      gap = "00000";
+    } else if (operationType.equals("r-2")) {
+      gap = "000000";
     }
 
     return gap.substring(unpaddedImmediate.length()) + unpaddedImmediate;
   }
 
-  private static String decodeTypeR(String[] operandsBits) {
+  private static String getShamt(String opCode) {
+    return getDecodedImmediate("r-1", "0");
+  }
+
+  private static String getFunct(String opCode) {
+    return getDecodedImmediate("r-2", FUNCT_MAP.get(opCode));
+  }
+
+  private static String decodeTypeR(String opCode, String[] operandsBits) {
+    String[] operandsBitsInBinary = { "00000", "00000", "00000" };
+
     String result = "";
+    for (int i = 0; i < operandsBits.length; i++) {
+      String operand = operandsBits[i];
+      Boolean isAbsolute = isAbsoluteRegister(operand);
 
-    for (String string : operandsBits) {
-
+      operandsBitsInBinary[i] = isAbsolute ? getDecodedImmediate("r-1", operand) : getDecodedRegister("r", operand);
     }
 
+    String operandsOrdered = getOrderedOperandsForTypeR(opCode, operandsBitsInBinary);
+    result = getResultTypeR(operandsOrdered, opCode);
+
     return result;
+  }
+
+  private static String getResultTypeR(String operandsOrdered, String opCode) {
+    if (opCode.equals("sll") || opCode.equals("srl")) {
+      return getShamt(opCode) + operandsOrdered + getFunct(opCode);
+    }
+    return operandsOrdered + getShamt(opCode) + getFunct(opCode);
+  }
+
+  private static String getOrderedOperandsForTypeR(String opCode, String[] operandsBitsInBinary) {
+    if (opCode.equals("div") || opCode.equals("mult")) {
+      return operandsBitsInBinary[0] + operandsBitsInBinary[1] + operandsBitsInBinary[2];
+    } else if (opCode.equals("sll") || opCode.equals("srl")) {
+      return operandsBitsInBinary[1] + operandsBitsInBinary[0] + operandsBitsInBinary[2];
+    } else if (opCode.equals("jr")) {
+      return operandsBitsInBinary[0] + operandsBitsInBinary[1] + operandsBitsInBinary[2];
+    }
+    return operandsBitsInBinary[1] + operandsBitsInBinary[2] + operandsBitsInBinary[0];
   }
 
   private static String decodeTypeJ(String[] operandsBits) {

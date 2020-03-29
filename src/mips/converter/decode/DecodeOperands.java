@@ -4,44 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DecodeOperands {
-  public static final Map<String, Integer> REGISTERS_MAP = new HashMap<String, Integer>() {
-    {
-      put("zero", 0);
-      put("at", 1);
-      put("-v", 2);
-      put("-a", 4);
-      put("-t", 8);
-      put("-r", 16);
-      put("-s", 16);
-      put("t8", 24);
-      put("t9", 25);
-      put("-k", 26);
-      put("gp", 28);
-      put("sp", 29);
-      put("fp", 30);
-      put("ra", 31);
-    }
-  };
+  public static final Map<String, Integer> REGISTERS_MAP=new HashMap<String,Integer>(){{put("zero",0);put("at",1);put("-v",2);put("-a",4);put("-t",8);put("-r",16);put("-s",16);put("t8",24);put("t9",25);put("-k",26);put("gp",28);put("sp",29);put("fp",30);put("ra",31);}};
 
-  public static final Map<String, String> FUNCT_MAP = new HashMap<String, String>() {
-    {
-      put("mult", "24");
-      put("div", "26");
-      put("add", "32");
-      put("addu", "33");
-      put("sub", "34");
-      put("subu", "35");
-      put("and", "36");
-      put("or", "37");
-      put("xor", "38");
-      put("nor", "39");
-      put("slt", "42");
-      put("sltu", "43");
-      put("sll", "0");
-      put("srl", "2");
-      put("jr", "8");
-    }
-  };
+  public static final Map<String, String> FUNCT_MAP=new HashMap<String,String>(){{put("mult","24");put("div","26");put("add","32");put("addu","33");put("sub","34");put("subu","35");put("and","36");put("or","37");put("xor","38");put("nor","39");put("slt","42");put("sltu","43");put("sll","0");put("srl","2");put("jr","8");}};
 
   public static String decode(String operationType, String opCode, String[] operands) {
     String lcOperationType = operationType.toLowerCase();
@@ -90,8 +55,9 @@ public class DecodeOperands {
   }
 
   private static String getFunct(String opCode) {
-    return getDecodedImmediate("r-2", FUNCT_MAP.get(opCode));
-  }
+   
+
+  
 
   private static String decodeTypeR(String opCode, String[] operandsBits) {
     String[] operandsBitsInBinary = { "00000", "00000", "00000" };
@@ -99,7 +65,7 @@ public class DecodeOperands {
     String result = "";
     for (int i = 0; i < operandsBits.length; i++) {
       String operand = operandsBits[i];
-      Boolean isAbsolute = isAbsoluteRegister(operand);
+   
 
       operandsBitsInBinary[i] = isAbsolute ? getDecodedImmediate("r-1", operand) : getDecodedRegister("r", operand);
     }
@@ -155,11 +121,6 @@ public class DecodeOperands {
           continue;
         } else if (i == 1) {
           result = getDecodedRegister("i", operand) + result;
-          continue;
-        } else if (i == 1) {
-          Integer registerInt = getRegisterInt(operand);
-          String unpaddedRegister = Integer.toBinaryString(registerInt);
-          result = ("00000".substring(unpaddedRegister.length()) + unpaddedRegister) + result;
           continue;
         }
 

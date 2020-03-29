@@ -4,24 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DecodeOperands {
-  public static final Map<String, Integer> REGISTERS_MAP = new HashMap<String, Integer>() {
-    {
-      put("zero", 0);
-      put("at", 1);
-      put("-v", 2);
-      put("-a", 4);
-      put("-t", 8);
-      put("-r", 16);
-      put("-s", 16);
-      put("t8", 24);
-      put("t9", 25);
-      put("-k", 26);
-      put("gp", 28);
-      put("sp", 29);
-      put("fp", 30);
-      put("ra", 31);
-    }
-  };
+  public static final Map<String, Integer> REGISTERS_MAP=new HashMap<String,Integer>(){{put("zero",0);put("at",1);put("-v",2);put("-a",4);put("-t",8);put("-r",16);put("-s",16);put("t8",24);put("t9",25);put("-k",26);put("gp",28);put("sp",29);put("fp",30);put("ra",31);}};
 
   public static final Map<String, String> FUNCT_MAP = new HashMap<String, String>() {
     {
@@ -30,10 +13,7 @@ public class DecodeOperands {
       put("add", "32");
       put("addu", "33");
       put("sub", "34");
-      p
-  t("subu", "35");
-  
-
+      put("subu", "35");
       put("and", "36");
       put("or", "37");
       put("xor", "38");
@@ -78,10 +58,14 @@ public class DecodeOperands {
     if (operationType.equals("i")) {
       gap = "0000000000000000";
     } else if (operationType.equals("j")) {
-       } ese if (operationType.equals("r-1")) {
+      gap = "0000000000000000000000000";
+    } else if (operationType.equals("r-1")) {
       gap = "00000";
     } else if (operationType.equals("r-2")) {
+      gap = "000000";
+    }
 
+    return gap.substring(unpaddedImmediate.length()) + unpaddedImmediate;
   }
 
   private static String getShamt(String opCode) {

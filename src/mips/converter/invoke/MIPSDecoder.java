@@ -1,25 +1,18 @@
 package mips.converter.invoke;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.util.List;
 
 import mips.converter.decode.DecodeOperands;
 import mips.converter.decode.Opcode;
 import mips.converter.helpers.InstructionHelpers;
 import mips.converter.io.ReadFile;
-import mips.converter.io.WriteFile;
 
 /**
  * MIPSDecoder
  */
 public class MIPSDecoder {
-    private static FileWriter getCleanFileWriter(String path) {
-        File f = new File(path);
-    }
-
     public static void run(String inputPath, String outputPath) throws Exception {
         ReadFile readFile = new ReadFile();
         File file = new File(outputPath);

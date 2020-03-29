@@ -1,9 +1,8 @@
-lw $r1,12 ($r0)
-lw $r2,16 ($r0)
-lw $r3, 20 ($r0)
-lw $r4, 24 ($r0)
-mul $r0, $r1, $r2
-neg $r5, $r4
-div $r5, $r3, $r5
-sub $r0, $r0, $r5
-sw $r0, 8 ($r0)
+addi s0, s1, 1
+andi s0, s1, 1
+ori s0, s1, 1
+slti s0, s1, 1
+beq s0, s1, 4
+bne s0, s1, 4
+lw s0, 4(s1)
+sw s0, 4(s1)

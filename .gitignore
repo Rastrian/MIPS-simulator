@@ -3,4 +3,4 @@ MIPS-converter.iml
 
 *.jar
 
-target/maven-status/
+target/**/

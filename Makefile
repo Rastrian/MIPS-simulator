@@ -1,7 +1,17 @@
 NAME=MIPSCONV-FINAL
-JARFILE=$(NAME).jar
-all:
-	sudo apt install unzip default-jre default-jdk maven -y
-	sudo mvn clean package
-	sudo chmod +x ./target/$(JARFILE)
-	java -jar ./target/$(JARFILE)
+JARFILE=bin/$(NAME).jar
+BINARY-FOLDER=bin
+MANIFEST=$$(find . -name "MANIFEST.MF")
+CLS=src
+all: install build-jar clean run
+build-jar:
+	javac -d $(CLS) $$(find $(CLS) -name "*.java")
+	cd ./$(CLS)/ && ls && jar cvfm ../$(JARFILE) $(MANIFEST) $$(find . -name "*.class")
+clean:
+	rm -rf $$(find $(CLS) -name "*.class")
+install:
+	sudo apt install default-jre default-jdk -y
+	mkdir -p $(BINARY-FOLDER)
+	rm -rf $(BINARY-FOLDER)/*
+run:
+	java -jar $(JARFILE)

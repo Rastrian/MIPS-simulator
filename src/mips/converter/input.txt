@@ -1,9 +1,12 @@
-lw $r1,12 ($r0)
-lw $r2,16 ($r0)
-lw $r3, 20 ($r0)
-lw $r4, 24 ($r0)
-mul $r0, $r1, $r2
-neg $r5, $r4
-div $r5, $r3, $r5
-sub $r0, $r0, $r5
-sw $r0, 8 ($r0)
+add s0, s1, s2
+sub s0, s1, s2
+mult s0, s1
+div s0, s1
+and s0, s1, s2
+or s0, s1,s2
+xor s0, s1, s2
+nor s0, s1, s2
+slt s0, s1, s2
+sll s0, s1, 1
+sll s0, s1, 1
+jr s0

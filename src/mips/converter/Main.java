@@ -20,13 +20,13 @@ public class Main {
 		Boolean errorMsg = true;
 		String[] terminalArgs;
 		try {
-			while(!input.equalsIgnoreCase("sair")){
+			while (!input.equalsIgnoreCase("sair")) {
 				input = reader.readLine();
 				terminalArgs = input.split(" ");
-				if (input.length() > 0 && terminalArgs[0].equals("mips32-decode") &&
-					(!terminalArgs[1].isEmpty()) && (!terminalArgs[2].isEmpty()))	{
-						MIPSDecoder.run(terminalArgs[1], terminalArgs[2]);
-						errorMsg = false;
+				if (input.length() > 0 && terminalArgs[0].equals("mips32-decode") && (!terminalArgs[1].isEmpty())
+						&& (!terminalArgs[2].isEmpty())) {
+					MIPSDecoder.run(terminalArgs[1], terminalArgs[2]);
+					errorMsg = false;
 				}
 				if (errorMsg) {
 					System.out.println("Error: mips32-decode [input path] [output path]");

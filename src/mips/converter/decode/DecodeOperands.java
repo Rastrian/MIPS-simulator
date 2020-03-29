@@ -156,6 +156,11 @@ public class DecodeOperands {
         } else if (i == 1) {
           result = getDecodedRegister("i", operand) + result;
           continue;
+        } else if (i == 1) {
+          Integer registerInt = getRegisterInt(operand);
+          String unpaddedRegister = Integer.toBinaryString(registerInt);
+          result = ("00000".substring(unpaddedRegister.length()) + unpaddedRegister) + result;
+          continue;
         }
 
         result += getDecodedRegister("i", operand);

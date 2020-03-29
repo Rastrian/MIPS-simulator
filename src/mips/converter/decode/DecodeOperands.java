@@ -62,7 +62,8 @@ public class DecodeOperands {
   private static String decodeTypeI(String[] operandsBits) {
     String result = "";
 
-    for (String operand : operandsBits) {
+    for (int i = 0; i < operandsBits.length; i++) {
+      String operand = operandsBits[i];
       Boolean isAbsolute = isAbsoluteRegister(operand);
 
       if (!isAbsolute) {
@@ -78,6 +79,11 @@ public class DecodeOperands {
           String unpaddedImmediate = Integer.toBinaryString(Integer.parseInt(immediate));
           result = register + result + "0000000000000000".substring(unpaddedImmediate.length()) + unpaddedImmediate;
           continue;
+        } else if (i == 1) {
+          Integer registerInt = getRegisterInt(operand);
+          String unpaddedRegister = Integer.toBinaryString(registerInt);
+          result = ("00000".substring(unpaddedRegister.length()) + unpaddedRegister) + result;
+          continue;
         }
 
         Integer registerInt = getRegisterInt(operand);
@@ -89,8 +95,6 @@ public class DecodeOperands {
       String unpaddedImmediate = Integer.toBinaryString(Integer.parseInt(operand));
       result += "0000000000000000".substring(unpaddedImmediate.length()) + unpaddedImmediate;
     }
-
-    System.out.println(result);
 
     return result;
   }

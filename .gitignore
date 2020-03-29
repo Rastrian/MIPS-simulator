@@ -3,4 +3,14 @@ MIPS-converter.iml
 
 *.jar
 
-target/**/
+target/*
+
+.idea/*
+
+.settings/*
+
+.vscode/*
+
+pom.xml
+
+bin/*

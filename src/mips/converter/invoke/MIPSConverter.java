@@ -43,6 +43,7 @@ public class MIPSConverter {
             }
 
             writeFile.close();
+			System.out.println("Conversão finalizada.");
         } catch (Exception e) {
             throw e;
         }

@@ -5,6 +5,11 @@ import java.util.Map;
 
 public class Opcode {
   public static final Map<String, String> MAP = new HashMap<String, String>() {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
     {
       put("add", "000000");
       put("addu", "000000");

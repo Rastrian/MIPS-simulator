@@ -10,9 +10,9 @@ import mips.converter.helpers.InstructionHelpers;
 import mips.converter.io.ReadFile;
 
 /**
- * MIPSDecoder
+ * MIPSConverter
  */
-public class MIPSDecoder {
+public class MIPSConverter {
     public static void run(String inputPath, String outputPath) throws Exception {
         ReadFile readFile = new ReadFile();
         File file = new File(outputPath);
@@ -29,9 +29,17 @@ public class MIPSDecoder {
             List<String> commands = readFile.getCommands(inputPath);
 
             for (int i = 0; i < commands.size(); i++) {
-                String decoded = processInstruction(commands.get(i));
-                writeFile.append(decoded + "\n");
-                writeFile.flush();
+                String decoded = " ";
+                
+                if (commands.get(i).equals("nop")) {
+                    writeFile.append(decoded + "\n");
+                    writeFile.flush();
+                } else {
+                    decoded = processInstruction(commands.get(i));
+
+                    writeFile.append(decoded + "\n");
+                    writeFile.flush();
+                }
             }
 
             writeFile.close();

@@ -15,3 +15,4 @@ install:
 	rm -rf $(BINARY-FOLDER)/*
 run:
 	java -jar $(JARFILE)
+travis-build: install build-jar clean

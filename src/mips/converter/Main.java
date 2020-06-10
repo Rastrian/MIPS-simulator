@@ -1,17 +1,23 @@
 package mips.converter;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Locale;
 
 import mips.converter.invoke.MIPSConverter;
+import mips.converter.io.CreateOutFile;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
 		System.setProperty("file.encoding", "UTF-8");
 		Locale.setDefault(new Locale("pt", "BR"));
+
+		File InstructionsOut = CreateOutFile.create("instructions");
+		File RegistersOut = CreateOutFile.create("registers");
+		File MemoryOut = CreateOutFile.create("memory");
 
 		System.out.println("\nUse o comando sair para sair do terminal.\n");
 
@@ -23,14 +29,13 @@ public class Main {
 			while (!input.equalsIgnoreCase("sair")) {
 				input = reader.readLine();
 				terminalArgs = input.split(" ");
-				if (input.length() > 0 && terminalArgs[0].equals("mips32-decode") && (!terminalArgs[1].isEmpty())
-						&& (!terminalArgs[2].isEmpty())) {
+				if (input.length() > 0 && terminalArgs[0].equals("mips32-decode") && (!terminalArgs[1].isEmpty())) {
 					System.out.println("Iniciando conversão");
-					MIPSConverter.run(terminalArgs[1], terminalArgs[2]);
+					MIPSConverter.run(terminalArgs[1], InstructionsOut.toString());
 					errorMsg = false;
 				}
 				if (errorMsg) {
-					System.out.println("Error: mips32-decode [input path] [output path]");
+					System.out.println("Error: mips32-decode [input path]");
 				}
 				errorMsg = true;
 			}

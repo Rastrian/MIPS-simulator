@@ -14,7 +14,6 @@ import mips.converter.io.ReadFile;
  */
 public class MIPSConverter {
     public static void run(String inputPath, String outputPath) throws Exception {
-        ReadFile readFile = new ReadFile();
         File file = new File(outputPath);
 
         if (!file.createNewFile()) {
@@ -26,7 +25,7 @@ public class MIPSConverter {
         FileWriter writeFile = new FileWriter(file, true);
 
         try {
-            List<String> commands = readFile.getCommands(inputPath);
+            List<String> commands = ReadFile.getCommands(inputPath);
 
             for (int i = 0; i < commands.size(); i++) {
                 String decoded = " ";

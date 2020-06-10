@@ -8,5 +8,15 @@ xor s0, s1, s2
 nor s0, s1, s2
 slt s0, s1, s2
 sll s0, s1, 1
-sll s0, s1, 1
+srl s0, s1, 1
 jr s0
+addi s0, s1, 1
+andi s0, s1, 1
+ori s0, s1, 1
+slti s0, s1, 1
+beq s0, s1, 4
+bne s0, s1, 4
+lw s0, 4(s1)
+sw s0, 4(s1)
+j 1024
+jal 1024

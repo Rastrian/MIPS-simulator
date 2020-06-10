@@ -3,37 +3,12 @@ package mips.converter.decode;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DecodeOperands {
-  public static final Map<String, Integer> REGISTERS_MAP = new HashMap<String, Integer>() {
-    /**
-    *
-    */
-    private static final long serialVersionUID = 1L;
+import mips.converter.register.RegisterUtils;
 
-    {
-      put("zero", 0);
-      put("at", 1);
-      put("-v", 2);
-      put("-a", 4);
-      put("-t", 8);
-      put("-r", 16);
-      put("-s", 16);
-      put("t8", 24);
-      put("t9", 25);
-      put("-k", 26);
-      put("gp", 28);
-      put("sp", 29);
-      put("fp", 30);
-      put("ra", 31);
-    }
-  };
+public class DecodeOperands {
 
   public static final Map<String, String> FUNCT_MAP = new HashMap<String, String>() {
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
-
     {
       put("mult", "24");
       put("div", "26");
@@ -179,10 +154,10 @@ public class DecodeOperands {
   }
 
   private static Integer getRegisterInt(String register) {
-    Integer value = REGISTERS_MAP.get(register);
+    Integer value = RegisterUtils.REGISTERS_MAP.get(register);
 
     if (value == null) {
-      value = REGISTERS_MAP.get("-" + register.substring(0, 1)) + Integer.parseInt(register.substring(1));
+      value = RegisterUtils.REGISTERS_MAP.get("-" + register.substring(0, 1)) + Integer.parseInt(register.substring(1));
     }
 
     return value;

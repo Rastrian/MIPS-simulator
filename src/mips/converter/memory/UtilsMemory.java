@@ -1,5 +1,7 @@
 package mips.converter.memory;
 
+import java.nio.ByteBuffer;
+
 public class UtilsMemory {
 	public static int loadHex(String s) throws NumberFormatException {
 		int full = 0;
@@ -11,14 +13,29 @@ public class UtilsMemory {
 		return full;
     }
     
-	public static String formatHex(int n, int count) {
-		String s = Integer.toHexString(n).toUpperCase();
-		while(s.length() < 8) {
-            s = "0x0" + s + " 0x00000000";
-            if (count <= 15){
-                s = "0x0" + s + " 0x00000000";
-            }
+    public static byte[] longToBytes(long x) throws java.nio.BufferUnderflowException {
+		ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+		buffer.putLong(x);
+		return buffer.array();
+	}
+	  
+	public static long bytesToLong(byte[] bytes) throws java.nio.BufferUnderflowException {
+		ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+		buffer.put(bytes);
+		buffer.flip();
+		return buffer.getLong();
+	}
+  
+	public static String formatHex(long n, int amount) {
+		String s = Long.toHexString(n);
+		while(s.length() < amount) {
+		  s = "0"+s;
 		}
-		return s;
+		return s;		
+	}
+
+    public static String printMemory(MemoryBlock m) {
+		return new String ("0x"+UtilsMemory.formatHex(UtilsMemory.bytesToLong(m.getName()), 3)
+		+" 0x"+UtilsMemory.formatHex(UtilsMemory.bytesToLong(m.getValue()), 8));
 	}
 }

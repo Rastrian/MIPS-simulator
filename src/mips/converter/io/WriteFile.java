@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import mips.converter.memory.MemoryBlock;
+import mips.converter.memory.UtilsMemory;
 import mips.converter.register.Register;
 import mips.converter.register.RegisterUtils;
 
@@ -20,11 +22,11 @@ public class WriteFile {
         bufferedWriter.close();
     }
 
-    public static void formatArrayListToFile(String path, ArrayList<String> array) throws IOException {
+    public static void formatMemoryToFile(String path, ArrayList<MemoryBlock> array) throws IOException {
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path));
-        array.forEach(a -> {
+        array.forEach(m -> {
             try {
-                bufferedWriter.append(a + "\n");
+                bufferedWriter.append(UtilsMemory.printMemory(m) + "\n");
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -69,27 +69,27 @@ public class RegisterUtils {
 
 
     public static byte[] longToBytes(long x) throws java.nio.BufferUnderflowException {
-        ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
-        buffer.putLong(x);
-        return buffer.array();
+      ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+      buffer.putLong(x);
+      return buffer.array();
     }
     
     public static long bytesToLong(byte[] bytes) throws java.nio.BufferUnderflowException {
-        ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
-        buffer.put(bytes);
-        buffer.flip();
-        return buffer.getLong();
+      ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
+      buffer.put(bytes);
+      buffer.flip();
+      return buffer.getLong();
     }
 
     public static String formatHex(long n) {
-		String s = Long.toHexString(n).toUpperCase();
-		while(s.length() < 8) {
-			s = "0"+s;
-		}
-		return s;		
+      String s = Long.toHexString(n);
+      while(s.length() < 8) {
+        s = "0"+s;
+      }
+      return s;		
     }
 
     public static String printRegister(Register r) {
-        return new String ("$"+r.getName()+" 0x"+formatHex(bytesToLong(r.getValue())));
+      return new String ("$"+r.getName()+" 0x"+formatHex(bytesToLong(r.getValue())));
     }
 }

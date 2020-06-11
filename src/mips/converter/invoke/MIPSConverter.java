@@ -26,8 +26,8 @@ public class MIPSConverter {
         FileWriter writeFile = new FileWriter(file, true);
 
         try {
-            List<String> commands = ReadFile.formatArrayList(inputPath);
-            Memory.start();
+            List<String> commands = ReadFile.formatCommands(inputPath);
+            Memory.init();
             RegisterMain.init();
 
             for (int i = 0; i < commands.size(); i++) {

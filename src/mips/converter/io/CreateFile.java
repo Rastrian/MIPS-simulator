@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class CreateOutFile {
-    public static File create(String filename) {
+public class CreateFile {
+    public static File outFile(String filename) {
         Path currentRelativePath = Paths.get("out");
         String directory = currentRelativePath.toAbsolutePath().toString() + "";
         File dir = new File(directory);

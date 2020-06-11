@@ -1,14 +1,16 @@
 package mips.converter.register;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import mips.converter.io.WriteFile;
+
 public class RegisterMain {
-    public static final int MAX_REGISTERS = 32;
-    private static ArrayList<Register> registers;
+    private static final String path = "out/registers.out"; // path of registers output
+    public static final int MAX_REGISTERS = 32; // maximum of registrators
+    private static ArrayList<Register> registers; // list of registrators
 
-    public RegisterMain() {
-    }
-
+    // init all 32 registers
     public static void init() {
         int number;
         registers = null;
@@ -45,16 +47,21 @@ public class RegisterMain {
         }
         if (registers.size() >= MAX_REGISTERS) {
             registers.forEach(r -> {
-                System.out.println(r.getIndex() + "° - " + r.getName() + " - " + r.getBaseValue());
+                System.out.println(RegisterUtils.printRegister(r));
             });
         }
+        exportData();
     }
 
-    public ArrayList<Register> getRegisters() {
+    public static ArrayList<Register> getRegisters() {
         return registers;
     }
 
-    public Register getRegister(String name) {
+    public static int size() {
+        return registers.size();
+    }
+
+    public static Register getRegister(String name) {
         for (Register r : registers){
             if (r.getName() == name || r.getName() == "$"+name){
                 return r;
@@ -63,7 +70,37 @@ public class RegisterMain {
         return null;
     }
 
-    public boolean updateRegister(String name, int value) {
+    public static Register getRegisterByIndex(int index) {
+        for (Register r : registers){
+            if (r.getIndex() == index){
+                return r;
+            }
+        }
+        return null;
+    }
+
+    public static int getRegisterIndex(String name) {
+        for (Register r : registers){
+            if (r.getName() == name || r.getName() == "$"+name){
+                return r.getIndex();
+            }
+        }
+        return -1;
+    }
+
+    public static String getRegisterBinary(String name) {
+        for (Register r : registers){
+            if (r.getName().equals(name) || r.getName().equals("$"+name)){
+                String result = RegisterUtils.REGISTERS_OPCODE.get(name);
+                if (result == null)
+                    RegisterUtils.REGISTERS_OPCODE.get(name.replaceAll("$", ""));
+                return result;
+            }
+        }
+        return null;
+    }
+
+    public static boolean updateRegister(String name, long value) {
         for (Register r : registers){
             if (r.getName() == name || r.getName() == "$"+name){
                 r.setValue(value);
@@ -74,4 +111,11 @@ public class RegisterMain {
         return false;
     }
 
+    public static void exportData(){
+        try {
+            WriteFile.formatRegistersToFile(path, registers);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

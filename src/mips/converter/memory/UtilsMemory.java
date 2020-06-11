@@ -16,7 +16,7 @@ public class UtilsMemory {
 		while(s.length() < 8) {
             s = "0x0" + s + " 0x00000000";
             if (count <= 15){
-                s = "0x" + s + " 0x00000000";
+                s = "0x0" + s + " 0x00000000";
             }
 		}
 		return s;

@@ -1,10 +1,10 @@
-package mips.converter.decode;
+package mips.converter.instructions;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Opcode {
-  public static final Map<String, String> MAP = new HashMap<String, String>() {
+  public static final Map<String, String> MAP_OPCODE = new HashMap<String, String>() {
     /**
      *
      */

@@ -3,40 +3,38 @@ package mips.converter.register;
 import java.util.Objects;
 
 public class Register {
-    private final String name; // $name
-    private int baseValue; // start value 0 or value based before ($sp or $gp for example).
-    private final int index; // index of vector
-
-    public Register(String name, int baseValue, int index) {
-        this.name = name;
-        this.baseValue = baseValue;
-        this.index = index;
-    }
+    private String name; // $name
+    private long baseValue; // start value 0 or value based before ($sp or $gp for example).
+    private int index; // index of vector
+    private byte[] value;
 
     public Register(String name, int index) {
         this.name = name;
-        this.baseValue = 0;
+        this.value = RegisterUtils.longToBytes(0);
+        this.baseValue = RegisterUtils.bytesToLong(value);
         this.index = index;
     }
 
-    public void setValue(int value) {
+    public void setValue(long value) {
         this.baseValue = value;
+        this.value = RegisterUtils.longToBytes(value); 
     }
 
     public String getName() {
         return this.name;
     }
 
-
-    public int getBaseValue() {
-        return this.baseValue;
+    public byte[] getValue() {
+        return this.value;
     }
 
+    public Long getBaseValue() {
+        return this.baseValue;
+    }
 
     public int getIndex() {
         return this.index;
     }
-
 
     @Override
     public boolean equals(Object o) {

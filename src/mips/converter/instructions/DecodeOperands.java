@@ -1,4 +1,4 @@
-package mips.converter.decode;
+package mips.converter.instructions;
 
 import java.util.HashMap;
 import java.util.Map;

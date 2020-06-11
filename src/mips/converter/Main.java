@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.Locale;
 
 import mips.converter.invoke.MIPSConverter;
-import mips.converter.io.CreateOutFile;
+import mips.converter.io.CreateFile;
 
 public class Main {
 
@@ -15,9 +15,10 @@ public class Main {
 		System.setProperty("file.encoding", "UTF-8");
 		Locale.setDefault(new Locale("pt", "BR"));
 
-		File InstructionsOut = CreateOutFile.create("instructions");
-		File RegistersOut = CreateOutFile.create("registers");
-		File MemoryOut = CreateOutFile.create("memory");
+		File InstructionsOut = CreateFile.outFile("instructions");
+		File RegistersOut = CreateFile.outFile("registers");
+		File MemoryOut = CreateFile.outFile("memory");
+		File CacheOut = CreateFile.outFile("memory");
 
 		System.out.println("\nUse o comando sair para sair do terminal.\n");
 
@@ -31,7 +32,8 @@ public class Main {
 				terminalArgs = input.split(" ");
 				if (input.length() > 0 && terminalArgs[0].equals("mips32-decode") && (!terminalArgs[1].isEmpty())) {
 					System.out.println("Iniciando conversão");
-					MIPSConverter.run(terminalArgs[1], InstructionsOut.toString());
+					MIPSConverter.run(terminalArgs[1], InstructionsOut.toString(),
+					MemoryOut.toString(), RegistersOut.toString(), CacheOut.toString());
 					errorMsg = false;
 				}
 				if (errorMsg) {

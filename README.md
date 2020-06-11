@@ -29,11 +29,11 @@ Ele instalará automaticamente os seguintes pacotes: default-jre default-jdk (JD
 ## UML (Diagrama de Classes)
 
 <div style="text-align: center">
-<a href='https://raw.githubusercontent.com/Rastrian/MIPS-converter/master/UML.jpg'><img src="https://raw.githubusercontent.com/Rastrian/MIPS-converter/master/UML.jpg"/></a>
+<a href='https://raw.githubusercontent.com/Rastrian/MIPS-converter/master/assets/UML.jpg'><img src="https://raw.githubusercontent.com/Rastrian/MIPS-converter/master/assets/UML.jpg"/></a>
 </div>
 
 ## TRELLO
 
 <div style="text-align: center">
-<a href='https://raw.githubusercontent.com/Rastrian/MIPS-converter/master/trello.png'><img src="https://raw.githubusercontent.com/Rastrian/MIPS-converter/master/trello.png"/></a>
+<a href='https://raw.githubusercontent.com/Rastrian/MIPS-converter/master/assets/trello.png'><img src="https://raw.githubusercontent.com/Rastrian/MIPS-converter/master/assets/trello.png"/></a>
 </div>

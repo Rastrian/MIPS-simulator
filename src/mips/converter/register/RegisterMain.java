@@ -65,7 +65,7 @@ public class RegisterMain {
 
     public static Register getRegister(String name) {
         for (Register r : registers){
-            if (r.getName() == name || r.getName() == "$"+name){
+            if (r.getName().equals(name) || r.getName().equals("$"+name)){
                 return r;
             }
         }

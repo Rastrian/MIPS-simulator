@@ -30,6 +30,10 @@ public class MIPSConverter {
             Memory.init();
             RegisterMain.init();
 
+            RegisterMain.updateRegister("s0", 3);
+            RegisterMain.updateRegister("s1", 4);
+            RegisterMain.updateRegister("s2", 1);
+
             for (int i = 0; i < commands.size(); i++) {
                 String decoded = " ";
                 

@@ -38,6 +38,16 @@ public class Memory {
         memory.set(Integer.parseInt(Long.toString(index)), memoryedited);
     }
 
+    public static Long getIndexAddress(String content) {
+        for (MemoryBlock m : memory){
+            if (Long.toString(m.getValueToLong()).equals(content)){
+                index = memory.indexOf(m);
+                return index;
+            }
+        }
+        return null;
+    }
+
     public static long getIndex(){
         return index;
     }

@@ -45,6 +45,8 @@ public class MIPSConverter {
             }
 
             writeFile.close();
+            Memory.exportData();
+            RegisterMain.exportData();
 			System.out.println("Conversão finalizada.");
         } catch (Exception e) {
             throw e;

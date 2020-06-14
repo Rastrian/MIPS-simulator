@@ -1,5 +1,7 @@
 package mips.converter.instructions;
 
+import mips.converter.memory.Memory;
+
 public class BinaryUtils {
 
     public static String processInstruction(String instruction) throws Exception {
@@ -8,6 +10,10 @@ public class BinaryUtils {
             String opcode = bits[0];
             String instructionType = InstructionHelpers.getRegisterType(opcode);
             String[] operands = instruction.replace(opcode, "").replace(" ", "").split(",");
+
+            if (opcode.equals("lw") || opcode.equals("sw")){
+                Memory.getIndexAddress(bits[0]+bits[1]);
+            }
 
             return getBinary(instructionType, opcode, operands);
         } catch (Exception e) {

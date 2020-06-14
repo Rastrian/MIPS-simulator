@@ -41,7 +41,9 @@ public class RegisterMain {
         registers.add(new Register("sp", 29));
         registers.add(new Register("fp", 30));
         registers.add(new Register("ra", 31));
-        if (registers.size() != MAX_REGISTERS) {
+        registers.add(new Register("hi", 32));
+        registers.add(new Register("lo", 33));
+        if (registers.size() < MAX_REGISTERS) {
             System.out.println("Erro: Quantidade de Registradores insuficiente, size = " + registers.size());
             return;
         }

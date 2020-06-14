@@ -37,3 +37,8 @@ Ele instalará automaticamente os seguintes pacotes: default-jre default-jdk (JD
 <div style="text-align: center">
 <a href='https://raw.githubusercontent.com/Rastrian/MIPS-converter/master/assets/trello.png'><img src="https://raw.githubusercontent.com/Rastrian/MIPS-converter/master/assets/trello.png"/></a>
 </div>
+
+### TODO
+
+Video (Luis Rondow e/ou Thalles)
+Refatorar UML (Luis Rondow e/ou Thalles)

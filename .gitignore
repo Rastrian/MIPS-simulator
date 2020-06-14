@@ -17,3 +17,5 @@ bin/*
 src/Test.java
 
 MIPS-converter.zip
+
+*.out

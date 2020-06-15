@@ -30,14 +30,14 @@ public class Main {
 			while (!input.equalsIgnoreCase("sair")) {
 				input = reader.readLine();
 				terminalArgs = input.split(" ");
-				if (input.length() > 0 && terminalArgs[0].equals("mips32-decode") && (!terminalArgs[1].isEmpty())) {
+				if (input.length() > 0 && terminalArgs[0].equals("mips32-simulator") && (!terminalArgs[1].isEmpty())) {
 					System.out.println("Iniciando conversão");
 					MIPSConverter.run(terminalArgs[1], InstructionsOut.toString(),
 					MemoryOut.toString(), RegistersOut.toString(), CacheOut.toString());
 					errorMsg = false;
 				}
 				if (errorMsg) {
-					System.out.println("Error: mips32-decode [input path]");
+					System.out.println("Error: mips32-simulator [input path]");
 				}
 				errorMsg = true;
 			}

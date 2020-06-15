@@ -3,8 +3,6 @@ package mips.converter.instructions;
 import java.util.HashMap;
 import java.util.Map;
 
-import mips.converter.memory.Memory;
-import mips.converter.memory.MemoryBlock;
 import mips.converter.register.Register;
 import mips.converter.register.RegisterMain;
 import mips.converter.register.RegisterUtils;
@@ -34,94 +32,6 @@ public class DecodeOperands {
 
   public static String decode(String operationType, String opCode, String[] operands) {
     String lcOperationType = operationType.toLowerCase();
-
-    Register temp = null; Register temp2 = null;
-    Register updated = null; long result = 0; long resultLo = 0; long resultHi = 0;
-    System.out.println(opCode);
-    switch(opCode){
-        case "add":
-            updated = RegisterMain.getRegister("s0");
-            temp = RegisterMain.getRegister("s1");
-            temp2 = RegisterMain.getRegister("s2");
-            result = temp.getBaseValue() + temp2.getBaseValue();
-            RegisterMain.updateRegister(updated.getName(), result);
-            break;
-        case "sub":
-            updated = RegisterMain.getRegister("s0");
-            temp = RegisterMain.getRegister("s1");
-            temp2 = RegisterMain.getRegister("s2");
-            result = temp.getBaseValue() - temp.getBaseValue();
-            RegisterMain.updateRegister(updated.getName(), result);
-            break;
-        case "mult":
-            temp = RegisterMain.getRegister("s0");
-            temp2 = RegisterMain.getRegister("s1");
-            if ((temp.getBaseValue() * temp2.getBaseValue()) > 4294967299.){
-              resultLo = (temp.getBaseValue() * temp2.getBaseValue()) / 2;
-              resultHi = resultLo;
-
-              RegisterMain.updateRegister("hi", resultHi);
-              RegisterMain.updateRegister("lo", resultLo);
-            }else{
-              resultLo = temp.getBaseValue() * temp2.getBaseValue();
-              RegisterMain.updateRegister("lo", resultLo);
-            }
-            break;
-        case "div":
-            temp = RegisterMain.getRegister("s0");
-            temp2 = RegisterMain.getRegister("s1");
-
-            try {
-              resultLo = temp.getBaseValue();
-              if (temp2.getBaseValue() > 0)
-                resultLo = temp.getBaseValue() / temp2.getBaseValue();
-              resultHi = temp.getBaseValue();
-              if (temp2.getBaseValue() > 0)
-                resultHi = temp.getBaseValue() % temp2.getBaseValue();
-            } catch (Exception e) {
-              throw e;
-            }
-
-            RegisterMain.updateRegister("hi", resultHi);
-            RegisterMain.updateRegister("lo", resultLo);
-            break;
-        case "neg":
-            temp = RegisterMain.getRegister("s1");
-            RegisterMain.updateRegister(temp.getName(), -temp.getBaseValue());
-            break;
-        case "slt":
-            temp = RegisterMain.getRegister("s1");
-            temp2 = RegisterMain.getRegister("s2");
-
-            result = 0;
-            if (temp.getBaseValue() < temp2.getBaseValue())
-              result = 1;
-
-            RegisterMain.updateRegister(temp.getName(), result);
-            break;
-        case "lw":
-            MemoryBlock mem = Memory.getIndexAddress();
-            temp = RegisterMain.getRegister("s0");
-            RegisterMain.updateRegister(temp.getName(), mem.getValueToLong());
-            break;
-        case "sw":
-            Memory.setIndexAddress(RegisterMain.getRegister("s0").getBaseValue().toString());
-            break;
-        case "and":
-            updated = RegisterMain.getRegister("s0");
-            temp = RegisterMain.getRegister("s1");
-            temp2 = RegisterMain.getRegister("s2");
-            result = (temp.getBaseValue() & temp2.getBaseValue());
-            RegisterMain.updateRegister(updated.getName(), result);
-            break;
-        case "or":
-            updated = RegisterMain.getRegister("s0");
-            temp = RegisterMain.getRegister("s1");
-            temp2 = RegisterMain.getRegister("s2");
-            result = (temp.getBaseValue() | temp2.getBaseValue());
-            RegisterMain.updateRegister(updated.getName(), result);
-            break;
-    }
 
     if (lcOperationType.equals("r")) {
       return decodeTypeR(opCode, operands);
@@ -179,6 +89,7 @@ public class DecodeOperands {
       Boolean isAbsolute = isAbsoluteRegister(operand);
 
       operandsBitsInBinary[i] = isAbsolute ? getDecodedImmediate("r-1", operand) : getDecodedRegister("r", operand);
+      RegisterMain.updateRegister("s"+Integer.toString(i), Long.parseLong(operandsBitsInBinary[i]));
     }
 
     String operandsOrdered = getOrderedOperandsForTypeR(opCode, operandsBitsInBinary);
@@ -246,17 +157,18 @@ public class DecodeOperands {
               RegisterMain.updateRegister(updated.getName(), result_reg);
               break;
             case "slti":
+                updated = RegisterMain.getRegister("s0");
                 temp = RegisterMain.getRegister("s1");
 
                 result_reg = 0;
                 if (temp.getBaseValue() < Long.parseLong(immediate))
                   result_reg = 1;
 
-                RegisterMain.updateRegister(temp.getName(), result_reg);
+                RegisterMain.updateRegister(updated.getName(), result_reg);
                 break;
             case "addi":
-                updated = RegisterMain.getRegister("s1");
-                temp = RegisterMain.getRegister("s2");
+                updated = RegisterMain.getRegister("s0");
+                temp = RegisterMain.getRegister("s1");
                 result_reg = temp.getBaseValue() + Long.parseLong(immediate);
                 RegisterMain.updateRegister(updated.getName(), result_reg);
                 break;
